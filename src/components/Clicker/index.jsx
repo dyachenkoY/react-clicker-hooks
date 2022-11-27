@@ -37,7 +37,6 @@ const Clicker = () => {
 
   const reset = () => {
     setClicks(0);
-    setIsStarted(true)
   };
 
   /*   useEffect(() => {
