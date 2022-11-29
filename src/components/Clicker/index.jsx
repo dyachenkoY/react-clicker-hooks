@@ -7,6 +7,14 @@ const Clicker = () => {
   const [isStarted, setIsStarted] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
 
+  useEffect(() => {
+    if (!isStarted) {
+      setIsStarted(true);
+      const intervalId = setInterval(addClicks, +speed);
+      setIntervalId(intervalId);
+    }
+  }, [])
+
   function stepChange(e) {
     setStep(e.target.value);
   }
