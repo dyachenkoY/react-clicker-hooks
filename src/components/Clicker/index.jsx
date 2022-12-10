@@ -5,6 +5,7 @@ const Clicker = () => {
   const [speed, setSpeed] = useState(1000);
   const [clicks, setClicks] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [isIncrement, setIsIncrement] = useState(true);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -44,13 +45,18 @@ const Clicker = () => {
     setClicks(0);
   };
 
-  /*   */
-
   return (
     <div>
       <p>Clicks: {+clicks}</p>
-      <button onClick={addClicks}>Добавить {step} клика(-ов)</button>
-      <button onClick={deleteClicks}>Отнять {step} клик(-ов)</button>
+      <button onClick={() => setIsIncrement(!isIncrement)}>
+        {!isIncrement ? "Добавить" : "Отнять"}
+      </button>
+      <button onClick={isIncrement ? addClicks : deleteClicks}>
+        {isIncrement
+          ? `Добавить ${step} клика(-ов)`
+          : `Отнять ${step} клик(-ов)`}
+      </button>
+      {/* <button onClick={deleteClicks}>Отнять {step} клик(-ов)</button> */}
       <button onClick={autoClicks}>
         Авто-клик по {step} клика(-ов) {speed}ms
       </button>
