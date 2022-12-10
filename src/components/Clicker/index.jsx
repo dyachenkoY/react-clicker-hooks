@@ -56,7 +56,6 @@ const Clicker = () => {
           ? `Добавить ${step} клика(-ов)`
           : `Отнять ${step} клик(-ов)`}
       </button>
-      {/* <button onClick={deleteClicks}>Отнять {step} клик(-ов)</button> */}
       <button onClick={autoClicks}>
         Авто-клик по {step} клика(-ов) {speed}ms
       </button>
