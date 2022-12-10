@@ -1,45 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Clicker = () => {
   const [step, setStep] = useState(1);
   const [speed, setSpeed] = useState(1000);
   const [clicks, setClicks] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
-  const [intervalId, setIntervalId] = useState(null);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    if (!isStarted) {
-      setIsStarted(true);
-      const intervalId = setInterval(addClicks, +speed);
-      setIntervalId(intervalId);
-    }
-  }, [])
+    autoClicks();
+    return stopAutoClicks;
+  }, []);
 
   function stepChange(e) {
-    setStep(e.target.value);
+    setStep(+e.target.value);
   }
   function speedChange(e) {
-    setSpeed(e.target.value);
+    setSpeed(+e.target.value);
   }
   const addClicks = () => {
-    setClicks((clicks) => clicks + +step);
+    setClicks((clicks) => clicks + step);
   };
   const deleteClicks = () => {
     if (clicks > 0 && clicks >= step) {
-      setClicks((clicks) => clicks - +step);
+      setClicks((clicks) => clicks - step);
     }
   };
 
   const autoClicks = () => {
     if (!isStarted) {
       setIsStarted(true);
-      const intervalId = setInterval(addClicks, +speed);
-      setIntervalId(intervalId);
+      const intervalId = setInterval(addClicks, speed);
+      intervalRef.current = intervalId;
     }
   };
 
   const stopAutoClicks = () => {
-    clearInterval(intervalId);
+    clearInterval(intervalRef.current);
     setIsStarted(false);
   };
 
@@ -47,10 +44,7 @@ const Clicker = () => {
     setClicks(0);
   };
 
-  /*   useEffect(() => {
-    autoClicks();
-    return stopAutoClicks();
-  }, []); */
+  /*   */
 
   return (
     <div>
@@ -63,18 +57,18 @@ const Clicker = () => {
       <button onClick={stopAutoClicks}>Остановка авто-клика</button>
       <button onClick={reset}>Сброс</button>
       <select value={step} onChange={stepChange}>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
       </select>
       <select value={speed} onChange={speedChange}>
-        <option>500</option>
-        <option>1000</option>
-        <option>1500</option>
-        <option>2000</option>
-        <option>2500</option>
+        <option value={500}>Пол секунды</option>
+        <option value={1000}>Секунда</option>
+        <option value={1500}>Полторы секунды</option>
+        <option value={2000}>Две секунды</option>
+        <option value={2500}>Две с половиной секунды</option>
       </select>
     </div>
   );
